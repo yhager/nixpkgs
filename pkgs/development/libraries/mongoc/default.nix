@@ -1,19 +1,23 @@
 { stdenv, fetchzip, perl, pkgconfig, libbson
-, openssl, which, zlib, snappy
+, openssl, which, zlib, snappy, cmake
 }:
 
 stdenv.mkDerivation rec {
   pname = "mongoc";
-  version = "1.8.0";
+  version = "1.16.0";
 
   src = fetchzip {
     url = "https://github.com/mongodb/mongo-c-driver/releases/download/${version}/mongo-c-driver-${version}.tar.gz";
-    sha256 = "1vnnk3pwbcmwva1010bl111kdcdx3yb2w7j7a78hhvrm1k9r1wp8";
+    sha256 = "072xr7lrr4gs0rjxxnlzvsql7n0gi2j2ndv8cbi5ywalfy2bpdgq";
   };
 
-  nativeBuildInputs = [ pkgconfig which perl ];
+  nativeBuildInputs = [ cmake pkgconfig which perl ];
   buildInputs = [ openssl zlib ];
   propagatedBuildInputs = [ libbson snappy ];
+  cmakeFlags = [
+    "-DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF"
+    "-DENABLE_SHM_COUNTERS=OFF"
+  ];
 
   enableParallelBuilding = true;
 
