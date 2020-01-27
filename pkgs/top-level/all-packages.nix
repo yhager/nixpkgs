@@ -179,6 +179,8 @@ in
 
   deviceTree = callPackage ../os-specific/linux/device-tree {};
 
+  enum4linux = callPackage ../tools/security/enum4linux {};
+
   device-tree_rpi = callPackage ../os-specific/linux/device-tree/raspberrypi.nix {};
 
   diffPlugins = (callPackage ../build-support/plugins.nix {}).diffPlugins;
@@ -2136,6 +2138,8 @@ in
     libmaxminddb = null;
   };
 
+  xmousepasteblock = callPackage ../tools/X11/xmousepasteblock { };
+
   mar1d = callPackage ../games/mar1d { } ;
 
   mcrypt = callPackage ../tools/misc/mcrypt { };
@@ -3394,6 +3398,9 @@ in
   fprot = callPackage ../tools/security/fprot { };
 
   fprintd = callPackage ../tools/security/fprintd { };
+  fprintd-thinkpad = fprintd.override {
+    thinkpad = true;
+  };
 
   franz = callPackage ../applications/networking/instant-messengers/franz { };
 
@@ -4719,6 +4726,8 @@ in
   latex2html = callPackage ../tools/misc/latex2html { };
 
   latexrun = callPackage ../tools/typesetting/tex/latexrun { };
+
+  lcdf-typetools = callPackage ../tools/misc/lcdf-typetools { };
 
   ldapvi = callPackage ../tools/misc/ldapvi { };
 
@@ -6490,9 +6499,9 @@ in
     inherit (darwin.apple_sdk.frameworks) Security;
   };
 
-  solr = solr_8;
-  solr_7 = callPackage ../servers/search/solr { };
-  solr_8 = callPackage ../servers/search/solr/8.x.nix { };
+  solr = callPackage ../servers/search/solr { };
+  solr_7 = solr;
+  solr_8 = solr;
 
   solvespace = callPackage ../applications/graphics/solvespace { };
 
@@ -8803,6 +8812,7 @@ in
 
   defaultCrateOverrides = callPackage ../build-support/rust/default-crate-overrides.nix { };
 
+  cargo-about = callPackage ../tools/package-management/cargo-about { };
   cargo-audit = callPackage ../tools/package-management/cargo-audit {
     inherit (darwin.apple_sdk.frameworks) Security;
   };
@@ -10675,6 +10685,8 @@ in
 
   swarm = callPackage ../development/tools/analysis/swarm { };
 
+  swiftformat = callPackage ../development/tools/swiftformat { };
+
   swig1 = callPackage ../development/tools/misc/swig { };
   swig2 = callPackage ../development/tools/misc/swig/2.x.nix { };
   swig3 = callPackage ../development/tools/misc/swig/3.x.nix { };
@@ -12471,6 +12483,9 @@ in
   };
 
   libfprint = callPackage ../development/libraries/libfprint { };
+  libfprint-thinkpad = libfprint.override {
+    thinkpad = true;
+  };
 
   libfpx = callPackage ../development/libraries/libfpx { };
 
@@ -12636,6 +12651,8 @@ in
   libical = callPackage ../development/libraries/libical { };
 
   libicns = callPackage ../development/libraries/libicns { };
+
+  libieee1284 = callPackage ../development/libraries/libieee1284 { };
 
   libimobiledevice = callPackage ../development/libraries/libimobiledevice { };
 
@@ -18939,6 +18956,8 @@ in
 
   flrig = callPackage ../applications/radio/flrig { };
 
+  fluxus = callPackage ../applications/graphics/fluxus { };
+
   flwrap = callPackage ../applications/radio/flwrap { };
 
   fluidsynth = callPackage ../applications/audio/fluidsynth {
@@ -21304,6 +21323,8 @@ in
 
   setbfree = callPackage ../applications/audio/setbfree { };
 
+  sfizz = callPackage ../applications/audio/sfizz { };
+
   sfxr = callPackage ../applications/audio/sfxr { };
 
   sfxr-qt = libsForQt5.callPackage ../applications/audio/sfxr-qt { };
@@ -22680,6 +22701,9 @@ in
 
   dero = callPackage ../applications/blockchains/dero.nix { boost = boost165; };
 
+  digibyte = libsForQt5.callPackage ../applications/blockchains/digibyte.nix { withGui = true; };
+  digibyted = callPackage ../applications/blockchains/digibyte.nix { withGui = false; };
+
   dogecoin  = callPackage ../applications/blockchains/dogecoin.nix { boost = boost165; withGui = true; };
   dogecoind = callPackage ../applications/blockchains/dogecoin.nix { boost = boost165; withGui = false; };
 
@@ -22729,6 +22753,9 @@ in
   stellar-core = callPackage ../applications/blockchains/stellar-core.nix { };
 
   sumokoin = callPackage ../applications/blockchains/sumokoin.nix { boost = boost165; };
+
+  vertcoin  = libsForQt5.callPackage ../applications/blockchains/vertcoin.nix { boost = boost165; withGui = true; };
+  vertcoind = callPackage ../applications/blockchains/vertcoin.nix { boost = boost165; withGui = false; };
 
   wasabiwallet = callPackage ../applications/blockchains/wasabiwallet { };
 
@@ -23230,6 +23257,8 @@ in
   orthorobot = callPackage ../games/orthorobot { };
 
   pacvim = callPackage ../games/pacvim { };
+
+  pentobi = libsForQt5.callPackage ../games/pentobi { };
 
   performous = callPackage ../games/performous {
     boost = boost166;
@@ -25318,6 +25347,10 @@ in
 
   mfcl2740dwcupswrapper = callPackage ../misc/cups/drivers/mfcl2740dwcupswrapper { };
   mfcl2740dwlpr = callPackage ../misc/cups/drivers/mfcl2740dwlpr { };
+
+  # This driver is only available as a 32 bit proprietary binary driver
+  mfcl3770cdwlpr = (callPackage ../misc/cups/drivers/brother/mfcl3770cdw/default.nix { }).driver;
+  mfcl3770cdwcupswrapper = (callPackage ../misc/cups/drivers/brother/mfcl3770cdw/default.nix { }).cupswrapper;
 
   mfcl8690cdwcupswrapper = callPackage ../misc/cups/drivers/mfcl8690cdwcupswrapper { };
   mfcl8690cdwlpr = callPackage ../misc/cups/drivers/mfcl8690cdwlpr { };
